@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
     <title>Wait Times</title>
     <meta name="description" content="Current Wait Times">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +22,8 @@
 
     <!-- ============== Resources style ============== -->
     <link rel="stylesheet" href="css/style-5.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/sf-fonts.css" />
 
     <!-- Modernizr runs quickly on page load to detect features -->
     <script src="js/modernizr.js"></script>
@@ -28,6 +31,19 @@
 
 
 <body>
+
+    <div id="top-floating-bar" class="if-mobile opacity-0 animated-middle">
+        <img src="img/IS-LOGO-BLACK.png" alt="InnerSpace Logo" class="is-logo" />
+
+        <div id="site-title-block">
+            <p id="site-title" class="bold">CAFE 25</p>
+        </div>
+
+        <p class="updated-time">LAST UPDATE
+            <span class="bold" id="last-updated-time">JUST NOW</span>
+        </p>
+    </div>
+
     <!-- OPEN - Loading part -->
     <div class="loading-part animated-middle">
         <div class="item-title text-center">
@@ -42,14 +58,10 @@
     </div>
     <!-- CLOSE - Loading part -->
 
-    <div id="multi-div">
-        <div class="ms-left animated-middle" id="left-part">
-
-        </div>
-
-        <div class="ms-right animated-middle" id="right-part">
-
-        </div>
+    <div id="multi-div" class="if-mobile">
+        <div class="ms-left animated-middle" id="left-part"></div>
+        <div class="ms-right animated-middle" id="right-part"></div>
+        <div class="separator-line opacity-0 animated-middle if-mobile"></div>
     </div>
 
     <!-- Copyright -->

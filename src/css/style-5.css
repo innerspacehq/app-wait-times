@@ -562,66 +562,6 @@ p.copyright {
   z-index: 0;
 }
 
-#left1 {
-  background: none;
-  /* Slideshow displayed */
-}
-
-#left2 {
-  background: #2B2D35;
-}
-#left2 .overlay {
-  background: transparent !important;
-}
-
-/* #left3 {
-//     background: $torch-red;
-} */
-/* #left4 {
-//      background: $shark;
-} */
-/* #left5 {
-//     background: $torch-red;
-} */
-/* #left6 {
-//      background: $shark;
-} */
-/* #left7 {
-//     background: $torch-red;
-} */
-/* #left8 {
-//      background: $shark;
-} */
-#right1 {
-  background: #2B2D35;
-}
-#right1 .overlay {
-  background: transparent !important;
-}
-
-#right2 {
-  background: none;
-  /* Slideshow / Image displayed */
-}
-
-/* #right3 {
-//      background: $shark;
-} */
-/* #right4 {
-//     background: $torch-red;
-} */
-/* #right5 {
-//      background: $shark;
-} */
-/* #right6 {
-//     background: $torch-red;
-} */
-/* #right7 {
-//      background: $shark;
-} */
-/* #right8 {
-//     background: $torch-red;
-} */
 .carousel-indicators {
   padding: 0 15px 15px 0;
   bottom: 0;
@@ -1154,12 +1094,12 @@ p.scroll span {
   height: 2em;
   /* line-height: 2em; */
   margin-left: 0.3em;
+  margin-right: -1em;
   position: relative;
   vertical-align: middle;
 }
 .countdown h2.datetime {
   font-size: 2.5em;
-  margin: -8em auto 8em;
   color: #FF1D4D;
   font-weight: 650;
 }
@@ -1921,7 +1861,6 @@ ul.icons li a i.fa-facebook {
 
   .countdown h2.datetime {
     font-size: 2em;
-    margin: -2em auto 3em;
     font-weight: 500;
   }
 }
@@ -1953,7 +1892,6 @@ ul.icons li a i.fa-facebook {
   }
   .countdown h2.datetime {
     font-size: 1.5em  !important; 
-    margin: -2em auto 2em;
     font-weight: 500;
   }
 

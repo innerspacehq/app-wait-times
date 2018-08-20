@@ -1,0 +1,263 @@
+/* TOP FLOATING BAR */
+#top-floating-bar {
+    position: absolute;
+    top: 0;
+    height: 8.4vh;
+    background: rgba(255, 255, 255, 0.6); 
+    width: 100%;
+    z-index: 9999999;
+}
+
+#top-floating-bar .is-logo {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0.7vh 1.8vmin; 
+    height: 7vh;
+    width: 21vh;
+}
+
+#top-floating-bar.mobile .is-logo {
+    margin: 1.5vh 1.8vmin;
+    height: 5.5vh;
+    width: 16vh;
+}
+
+#top-floating-bar .updated-time {
+    line-height: 8.4vh;
+    position: absolute;
+    top: 0;
+    right: 28vmin;
+    text-align: center;
+    margin: 0px 0.8vmin;
+    color: #000000;
+    font-size: 3vmin;
+    font-family: 'SF Pro';
+    font-weight: 300;
+}
+
+#top-floating-bar .updated-time span {
+    margin: 0.6vh 0.6vmin;
+    font-family: 'SF Pro'
+}
+
+#top-floating-bar #site-title-block {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 8.4vh;
+    width: 28vmin;
+    background: #000000;
+    color: #FFFFFF;
+}
+
+#top-floating-bar #site-title-block #site-title {
+    line-height: 8.4vh;
+    color: #FFFFFF !important;
+    text-align: center;
+    font-size: 5vmin;
+    font-family: 'SF Pro'
+}
+
+/* ZONE INFO */
+.zone-data {
+    text-align: center !important;
+    text-transform: uppercase;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.zone-data.mobile {
+    height: auto;
+    display: block;
+    padding-top: 20vh;
+    padding-bottom: 10vh;
+}
+
+.zone-data.mobile > header {
+    margin-bottom: 15.7vh;
+}
+
+.zone-data > header > h1 {
+    font-size: 10vmin;
+    font-weight: 700;
+}
+
+.wait-time {
+    display: inline-block;
+}
+
+.wait-time > header {
+    margin-bottom: 1vh;
+}
+
+.wait-time > header > h2 {
+    color: black;
+    background-color: white;
+    font-family: 'SF Pro';
+    font-size: 4vmin;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 0.25em 0.5em;
+}
+
+.wait-time-info {
+    color: black;
+    background-color: white;
+    font-family: 'SF Compact';
+    font-size: 9.5vmin;
+    font-weight: 200;
+    padding: 0.2em 0.3em;
+}
+
+.wait-time-info .data {
+    font-weight: 700;
+}
+
+.wait-time-info.wait-short {
+    background-color: #8CC63F;
+}
+
+.wait-time-info.wait-medium {
+    background-color: #F7931E;
+}
+
+.wait-time-info.wait-long {
+    background-color: #ED1C24;
+}
+
+/* WELCOME SLIDES */
+.welcome-slide {
+    background: url(../img/welcome-slide-bg.jpg) no-repeat;
+    background-size: cover;
+    text-transform: uppercase;
+}
+
+.welcome-slide h1 {
+    margin-bottom: 13vmin;
+}
+
+.welcome-slide2 {
+    background: url(../img/welcome-slide-bg.jpg) no-repeat;
+    background-size: cover;
+    text-transform: uppercase;
+}
+
+.welcome-slide2 h1 {
+    margin-bottom: 13vmin;
+}
+
+.map-slide {
+    background: #000000;
+}
+
+.map-slide img {
+    height:71vh;
+    width: 80vh;
+    margin-top: 8.4vh; /* Equal to top floating bar */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.map-slide img.mobile {
+    height: 71vmin;
+    width: 80vmin;
+    margin: auto;
+    padding: 4vh;
+}
+
+/* ENDING SLIDES */
+
+.ending-slide {
+    background: #202733
+}
+
+.ending-slide h1 {
+    margin-bottom: 13vmin;
+}
+
+.fullscreen-image-slide img {
+    width:100%;
+    height:100%;
+}
+
+.fullscreen-image-slide img.mobile {
+    height:70%;
+}
+
+/* MISCELLANEOUS */
+
+body {
+    background: #000000;
+}
+
+.loading-part {
+    background: transparent;
+}
+
+#multi-div.mobile {
+  background: url(../img/mobile-bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.separator-line {
+    height: 65%;
+    width: 0;
+    border: 1px solid white;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}
+
+.separator-line.mobile {
+    display: none;
+}
+.text-center {
+  text-align: center !important;
+}
+
+.text-slide-container {
+    display: block;
+    height: 31vh;
+    width: 77vmin;
+    margin: 0 auto;
+    position: relative;
+}
+
+.text-slide-container.mobile {
+    height: auto;
+    padding-top: 20vh;
+    padding-bottom: 10vh;
+}
+
+.separator-line-horizontal {
+    height: 4px;
+    background:#ffffff;
+    border-bottom:1px solid #ffffff;
+    width: 61.6vmin;
+    margin: auto;
+}
+
+.main-text {
+    font-family: 'SF Pro';
+    font-size: 13vmin;
+    font-weight: 700;
+}
+
+.sub-text {
+    font-family: 'SF Pro';
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    font-size: 4vmin;
+    margin: 4vmin auto;
+}

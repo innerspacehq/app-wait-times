@@ -56,40 +56,69 @@ var WaitTimes = function () {
     }
 
     var slideTemplate = `
-        <div class="ms-section" id="<%this.id%>">
-            <div class="overlay"></div>
-            <div class="item-title text-center">
-                <div class="countdown row">
-                    <h2 class="datetime animated-middle opacity-0"> <%this.datetime%> </h2>
-                </div>
-
-                <h2><%this.label%></h2>
-                <div class="separator"></div>
-
-                <div class="countdown row">
-                    <div class="dash-glob">
-                        <div class="dash days_dash row">
-                            <div class="digit animated-middle opacity-0"><%this.waittime%></div>
-                            <div class="text-right animated-middle opacity-0">minutes<br/>wait</div>
-                        </div>
+        <div class='ms-section'>
+            <article class="zone-data if-mobile" id="<%this.id%>">
+                <header>
+                    <h1><%this.label%></h1>
+                </header>
+                <section class="wait-time">
+                    <header>
+                        <h2>Current Wait Time</h2>
+                    </header>
+                    <div class="wait-time-info wait-<%this.waitlength%>">
+                        <span class="data"><%this.waittime%></span><span class="units"> Minutes</span>
                     </div>
+                </section>
+            </article>
+        </div>
+    `
 
-                    <div class="text-day hidden">
-                        <h3 class="animated-middle opacity-0">
-                            <span class="point">Occupancy: </span> <%this.occupancy%></h3>
-                    </div>
+    var welcomeMessageSlide = `
+        <div class="ms-section welcome-slide" id="left1">
+                <div class="text-slide-container text-center if-mobile">
+                    <h1 class="main-text animated-middle opacity-0">WELCOME TO CAFE 25</h1>
+                    <div class="separator-line-horizontal animated-middle opacity-0"></div>
+                    <p class="sub-text animated-middle opacity-0">BON APPÉTIT</p>
                 </div>
+        </div>
+    `
+
+    var mapSlide = `
+        <div class="ms-section map-slide" id="right1">
+            <img src="img/cafe_25_map.png" alt="Cafe 25 Map" class="if-mobile animated-middle opacity-0" />
+        </div>
+    `
+
+    var messageSlideTemplate = `
+        <div class="ms-section if-mobile ending-slide" id="left5">
+            <div class="text-slide-container text-center if-mobile">
+                <h1 class="main-text animated-middle opacity-0">HAVE A GREAT DAY!</h1>
+                <div class="separator-line-horizontal animated-middle opacity-0"></div>
+                <p class="sub-text animated-middle opacity-0">SEE YOU AGAIN SOON</p>
             </div>
+        </div>
+    `
+
+    var fullscreenImageSlideTemplate = `
+        <div class="ms-section fullscreen-image-slide" id="right5">
+            <img src="img/ending-slide-bg.png" alt="Stack of cookies" class ="if-mobile" />
         </div>
     `
 
     var slideEmptyTemplate = `
-        <div class="ms-section visible-lg" id="<%this.id%>">
-            <div class="overlay"></div>
-            <div class="item-title">
-            </div>
+        <div class="ms-section" id="<%this.id%>">
         </div>
     `
+
+    var addIntroSlides = function () {
+        $("#left-part").append(welcomeMessageSlide);
+        $("#right-part").append(mapSlide);
+    }
+
+    var addOutroSlides = function () {
+        $("#left-part").append(messageSlideTemplate);
+        $("#right-part").append(fullscreenImageSlideTemplate);
+    }
 
     /* Public Common functions */
     return {
@@ -116,35 +145,43 @@ var WaitTimes = function () {
             }
 
             // Check if the required URL parameters were set
-            if (!_urlParams["api"]) {
+            if (_urlParams["api"]) {
+                WaitTimesProxy.setUrlHostname(_urlParams["api"]);
+            } else if (Cookies.get("api")) {
+                WaitTimesProxy.setUrlHostname(Cookies.get("api"));
+            } else {
                 console.error("No API server specified in URL!");
                 hideLoadingAnimation();
                 return;
-                // We should display an error or have a fallback API URL in this case
-            } else {
-                WaitTimesProxy.setUrlHostname(_urlParams["api"]);
             }
 
-            if (!_urlParams["site"]) {
+            if (_urlParams["site"]) {
+                _siteId = _urlParams["site"];
+            } else if (Cookies.get("site_id")) {
+                _siteId = Cookies.get("site_id");
+            } else {
                 console.error("No Site ID provided in URL!");
                 hideLoadingAnimation();
                 return;
             }
-            _siteId = _urlParams["site"];
 
-            if (!_urlParams["zones"]) {
+            if (_urlParams["zones"]) {
+                _zoneIds = _urlParams["zones"].split(",");
+            } else if (Cookies.get("zone_ids")) {
+                _zoneIds = decodeURIComponent(Cookies.get("zone_ids")).split(",");
+            } else {
                 console.error("No Zone IDs provided in URL!");
                 hideLoadingAnimation();
                 return;
                 // If no zone id is entered we could fallback to displaying info for all zones in a site
             }
-            _zoneIds = _urlParams["zones"].split(",");
 
-            if (!_urlParams["ideals"]) {
-                // Default it to ideal time of 5 min
-                _urlParams["ideals"] = "5";
+            var ideals = ["5"]; // Default it to ideal time of 5 min
+            if (_urlParams["ideals"]) {
+                ideals = _urlParams["ideals"].split(",");
+            } else if (Cookies.get("ideals")) {
+                ideals = decodeURIComponent(Cookies.get("ideals")).split(",");
             }
-            var ideals = _urlParams["ideals"].split(",");
             for (i = 0; i < _zoneIds.length; i++) {
                 _ideals[_zoneIds[i]] = ideals[i] || "5";
             }
@@ -158,13 +195,18 @@ var WaitTimes = function () {
                 promises.push(promise);
             });
             Proxy.settle(promises).then(function (results) {
-                if (!results || results.length == 0) {
-                    hideLoadingAnimation();
-                    return;
+                if (!results) {
+                    results = [];
                 }
+                var now = new Date();
+
+                // Add static intro slides
+                addIntroSlides();
+
                 var i = 0;
-                var left = 1, right = 1;
+                var left = 2, right = 2;
                 results.forEach(function (r) {
+                    if (!r.isFulfilled() && !r.value()) return;
                     var entity = r.value() || {};
                     var side = i % 2 == 0 ? "left" : "right";
                     var data = getLatestData(entity);
@@ -177,10 +219,13 @@ var WaitTimes = function () {
                     var ideal = _ideals[entity["zone-id"]];
                     if (data["wait-time"] <= ideal) {
                         model.waittime = "0-" + ideal;
+                        model.waitlength = "short";
                     } else if (data["wait-time"] <= (ideal * 2)) {
                         model.waittime = ideal + "-" + (ideal * 2);
+                        model.waitlength = "medium";
                     } else {
                         model.waittime = (ideal * 2) + "+";
+                        model.waitlength = "long";
                     }
                     var tmpl = r.isFulfilled()
                         ? TemplateEngine(slideTemplate, model)
@@ -188,27 +233,35 @@ var WaitTimes = function () {
                     $("#" + side + "-part").append(tmpl);
                     i++;
                 });
+
                 // If there are odd number of zones, insert an empty slide at the end.
                 if (i % 2 == 1) {
                     $("#right-part").append(TemplateEngine(slideEmptyTemplate, { id: "right" + right }));
                 }
 
+                if (i > 0) {
+                    // Add static outro slides
+                    addOutroSlides();
+                }
+
+                var dateString = now.toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric" });
+                console.log(dateString);
+                $("#last-updated-time").text(dateString);
+
                 if ((_onMobile === false)) {
                     $('#multi-div').multiscroll({
                         loopTop: true,
                         loopBottom: true,
-                        navigation: true,
-                        navigationTooltips: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
                     });
                 } else {
+                    $('.if-mobile').addClass('mobile');
                     $('#multi-div').multiscroll({
                         loopTop: true,
                         loopBottom: true,
-                        navigation: true,
-                        navigationTooltips: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
                     });
                     $('#multi-div').multiscroll.destroy();
                 }
+                $('.if-mobile').removeClass('if-mobile');
 
                 slidePanelsIn();
                 startAutoScroll();
